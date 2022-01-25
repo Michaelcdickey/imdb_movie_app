@@ -12,7 +12,6 @@ function Home() {
 
   // Displays loading text while loading and if movies aren't found displays a not found notice
   function loadDisplay() {
-    console.log(movies.length);
     if (isLoading) {
       return <div>Loading...</div>;
     } else if (movies.length === 0) {
@@ -26,7 +25,6 @@ function Home() {
     axios.get('https://imdb-api.com/en/API/MostPopularMovies/' + apiKey)
     .then(response => {
       setMovies(response.data.items);
-      console.log(response.data.items);
       setLoading(false);
     })
     .catch(error => {
