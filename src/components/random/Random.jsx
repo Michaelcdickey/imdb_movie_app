@@ -3,15 +3,25 @@ import axios from 'axios';
 import notFound from './not_found.png';
 import { useLocation } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
+import TrailerModal from "../trailer-modal/TrailerModal";
 
+/**
+ * Page where a random movie from IMDB's most popular movies appears on load
+ * Users may select the 'New Random Movie' button to get a new random movie
+ * Users may click the title of the movie to see a trailer
+ */
 function Random() {
 
-// State variables
-const [movie, setMovie] = useState({});
-const [movies] = useState(useLocation().state.movies);
-const [poster, setPoster] = useState("");
-const [isLoading, setLoading] = useState(false);
-const [apiKey] = useState(useLocation().state.apiKey);
+  // State variables
+  const [movie, setMovie] = useState({});
+  const [movies] = useState(useLocation().state.movies);
+  const [poster, setPoster] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [apiKey] = useState(useLocation().state.apiKey);
+  // Modal Variables
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // Gets a random movie from the prop list and sets the states
   function getRandomMovie() {
@@ -45,31 +55,41 @@ const [apiKey] = useState(useLocation().state.apiKey);
 
   return (
     <div className="random">
-      <div className="container" style={{paddingBottom: "50px"}}>
+      <div className="container" style={{paddingBottom: "20px"}}>
         <div className="row align-items-center my-2">
-          <div className="col-lg-7">
+          <div className="col-lg-7" style={{paddingLeft: "200px"}}>
             {
-              isLoading ? <div>Loading...</div>
-              :
+              isLoading ? <div>Loading...</div> :
                 <img
                     className="img-fluid rounded mb-4 mb-lg-0"
                     src={poster}
                     alt=""
+                    style={{height: "600px", width: "400px"}}
                 />
             }
           </div>
           <div className="col-lg-5">
-            <h1 className="font-weight-light">{movie.title}</h1>
+            <h1 className="font-weight-light" 
+            style={{ color: 'darkblue', cursor: 'pointer' }} onClick={handleShow}>
+              <u>{movie.title}</u>
+            </h1>
             <p>
-                Year Released: {movie.year}
+              Year Released: {movie.year}
             </p>
             <p>
-                <Button variant="outline-dark" disabled={isLoading} onClick={getRandomMovie}>
-                    New Random Movie
-                </Button>
+              IMDB Rating: {movie.imDbRating}
+            </p>
+            <p>
+              Rank: {movie.rank}
+            </p>
+            <p>
+              <Button variant="outline-dark" disabled={isLoading} onClick={getRandomMovie}>
+                New Random Movie
+              </Button>
             </p>
           </div>
         </div>
+        <TrailerModal apiKey={apiKey} movie={movie} show={show} handleClose={handleClose}></TrailerModal>
       </div>
     </div>
   );

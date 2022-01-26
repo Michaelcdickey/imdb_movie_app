@@ -3,12 +3,15 @@ import logo from './appLogo.png';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
+/**
+ * Home page from which the main site pages are selected
+ */
 function Home() {
 
   // State variables
   const [isLoading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
-  const [apiKey] = useState("k_ll9q08sj")
+  const [apiKey] = useState("k_2cll091q")
 
   // Displays loading text while loading and if movies aren't found displays a not found notice
   function loadDisplay() {

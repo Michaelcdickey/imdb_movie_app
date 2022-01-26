@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * Displays a warning that the app is not related to IMDB
+ */
 function Footer() {
   return (
     <div className="footer">
